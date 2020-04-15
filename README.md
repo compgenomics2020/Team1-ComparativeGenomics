@@ -44,3 +44,4 @@ Note: this pipeline assumes all tools (MUMmer, chewBBACA, and kSNP3) have alread
 1) Kurtz, S., Phillippy, A., Delcher, A. L., Smoot, M., Shumway, M., Antonescu, C., & Salzberg, S. L. (2004). Versatile and open software for comparing large genomes. Genome biology, 5(2), R12.
 2) Silva, M., Machado, M. P., Silva, D. N., Rossi, M., Moran-Gilad, J., Santos, S., ... & Carrico, J. A. (2018). chewBBACA: A complete suite for gene-by-gene schema creation and strain identification. Microbial genomics, 4(3).
 3) Gardner, S. N., Slezak, T., & Hall, B. G. (2015). kSNP3. 0: SNP detection and phylogenetic analysis of genomes without genome alignment or reference genome. Bioinformatics, 31(17), 2877-2878.
+4) Z Zhou, NF Alikhan, MJ Sergeant, N Luhmann, C Vaz, AP Francisco, JA Carrico, M Achtman (2018) "GrapeTree: Visualization of core genomic relationships among 100,000 bacterial pathogens", Genome Res; doi: https://doi.org/10.1101/gr.232397.117
