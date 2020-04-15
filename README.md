@@ -27,7 +27,7 @@ phylogenetic trees based upon those SNPs.
 
 ### Usage:
 
-### Requirememts:
+### Requirements:
 
 ### Citations:
 
