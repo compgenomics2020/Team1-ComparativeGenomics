@@ -17,7 +17,7 @@ This pipeline performs various comparative genomics techniques on the 50 E.coli 
 
 #### ChewBBACA:	
    * chewBBACA is a comprehensive pipeline including a set of functions for the creation and validation of whole genome and core genome MultiLocus Sequence Typing (wg/cgMLST) schemas, providing an allele calling algorithm based on Blast Score Ratio that can be run in multiprocessor settings.
-   * Grapetree is used to create a Newick tree and must be installed prior to running pipeline.	
+   * Grapetree is used to create a Newick tree for later visualization and must be installed prior to running the pipeline (see Requirements).	
    
 ## SNP Approach
 
@@ -27,17 +27,21 @@ phylogenetic trees based upon those SNPs.
    * Version: 3.0
 
 ### Usage:
-Note: this pipeline assumes all tools (MUMmer, chewBBACA, and kSNP3) have already been installed.
 ```
 ./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -p <file_path> [-h]
-    -i,--input    path to directory containing assembled genomes
+    -i,--input     path to directory containing assembled genomes
     -o,--output    path to output directory
-    -c,--cpu    number of cpus
-    -p,--ptf    path of prodigal training prodigal training file for genome species
-    -h    print usage information    
+    -c,--cpu       number of cpus
+    -p,--ptf       path of prodigal training prodigal training file for genome species
+    -h             print usage information    
 ```
 
 ### Requirements:
+This pipeline assumes all tools (MUMmer, chewBBACA, Grapetree, and kSNP3) have already been installed.
+1. [MUMmer](http://mummer.sourceforge.net/)
+2. [chewBBACA](https://github.com/B-UMMI/chewBBACA) 
+3. [Grapetree](https://github.com/achtman-lab/GrapeTree)
+4. [kSNP3](https://sourceforge.net/projects/ksnp/)
 
 ### Citations:
 
