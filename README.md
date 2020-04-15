@@ -1,24 +1,29 @@
 # Team1-ComparativeGenomics
 
-Team Members: Laura Mora, Heather Patrick, Lawrence McKinney, Kenji Gerhardt, Hira Anis, Manasa Vegesna 
+**Team Members**: Laura Mora, Heather Patrick, Lawrence McKinney, Kenji Gerhardt, Hira Anis, Manasa Vegesna 
 
-## Comparative Genomics Pipeline
+# Comparative Genomics Pipeline
 
 This pipeline performs various comparative genomics techniques on the 50 E.coli isolates using ANI, MLST and SNP-based approaches to determine the outbreak cluster. 
 
-### Tools Used:
+## Tools Used:
+
+## ANI - Approach
 	
 #### MUMmer:	
    * Description of the tool
+   
+## MLST Approach
 
 #### ChewBBACA:	
    * Description of the tool
+   
+## SNP Approach
 
 #### kSNP:
    * kSNP3 is a program that identifies the pan-genome SNPs in a set of genome sequences, and estimates
 phylogenetic trees based upon those SNPs. 
    * Version: 3.0
-   
 
 ### Usage:
 
