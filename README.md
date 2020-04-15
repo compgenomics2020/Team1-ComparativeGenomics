@@ -11,12 +11,13 @@ This pipeline performs various comparative genomics techniques on the 50 E.coli 
 ## ANI - Approach
 	
 #### MUMmer:	
-   * Description of the tool
+   * A bioinformatic tool used align and compare entire genomes at varying evolutionary distances.
    
 ## MLST Approach
 
 #### ChewBBACA:	
-   * Description of the tool
+   * chewBBACA is a comprehensive pipeline including a set of functions for the creation and validation of whole genome and core genome MultiLocus Sequence Typing (wg/cgMLST) schemas, providing an allele calling algorithm based on Blast Score Ratio that can be run in multiprocessor settings.
+   * Grapetree is used to create a Newick tree and must be installed prior to running pipeline.	
    
 ## SNP Approach
 
@@ -26,6 +27,15 @@ phylogenetic trees based upon those SNPs.
    * Version: 3.0
 
 ### Usage:
+Note: this pipeline assumes all tools (MUMmer, chewBBACA, and kSNP3) have already been installed.
+```
+./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -p <file_path> [-h]
+    -i,--input    path to directory containing assembled genomes
+    -o,--output    path to output directory
+    -c,--cpu    number of cpus
+    -p,--ptf    path of prodigal training prodigal training file for genome species
+    -h    print usage information    
+```
 
 ### Requirements:
 
