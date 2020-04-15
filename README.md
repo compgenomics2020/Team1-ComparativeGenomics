@@ -26,7 +26,7 @@ This pipeline performs various comparative genomics techniques on the 50 E.coli 
 phylogenetic trees based upon those SNPs. 
    * Version: 3.0
 
-### Usage:
+## Usage:
 ```
 ./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -p <file_path> [-h]
     -i,--input     path to directory containing assembled genomes
@@ -36,14 +36,14 @@ phylogenetic trees based upon those SNPs.
     -h             print usage information    
 ```
 
-### Requirements:
+## Requirements:
 This pipeline assumes all tools (MUMmer, chewBBACA, Grapetree, and kSNP3) have already been installed.
 1. [MUMmer](http://mummer.sourceforge.net/)
 2. [chewBBACA](https://github.com/B-UMMI/chewBBACA) 
 3. [Grapetree](https://github.com/achtman-lab/GrapeTree)
 4. [kSNP3](https://sourceforge.net/projects/ksnp/)
 
-### Citations:
+## Citations:
 
 1) Kurtz, S., Phillippy, A., Delcher, A. L., Smoot, M., Shumway, M., Antonescu, C., & Salzberg, S. L. (2004). Versatile and open software for comparing large genomes. Genome biology, 5(2), R12.
 2) Silva, M., Machado, M. P., Silva, D. N., Rossi, M., Moran-Gilad, J., Santos, S., ... & Carrico, J. A. (2018). chewBBACA: A complete suite for gene-by-gene schema creation and strain identification. Microbial genomics, 4(3).
