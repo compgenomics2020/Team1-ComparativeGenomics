@@ -86,6 +86,10 @@ def main():
         output += "/"
    
      #call MUMmer
+    if args.delta:
+        MUMmer(args.prefix, args.reference_file, args.query_file, args.delta_file)
+    else:
+        MUMmer(args.prefix, args.reference_file, args.query_file))
 
     #call chewBBACA
     if args.ptf:
