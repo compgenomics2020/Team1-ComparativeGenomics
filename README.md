@@ -15,11 +15,9 @@ This pipeline performs various comparative genomics techniques on the 50 E.coli 
    * MUMmer efficiently locates maximal unique matches between two sequences using a suffix tree data structure.
    * MUMmer is a modular design comprising of many various utilities and scripts.
    * There must be exactly one reference file and at least one query file.
-     1. Use Case - Aligning two finished sequences.
-         * Command line syntax: mummer [options] <ref.fasta> <query.fasta>
-     2. Use Case - Aligning two draft sequences
+     1. Use Case - Aligning two draft sequences
          * Command line syntax: nucmer [options] <ref.fasta> <query.fasta>
-     3. Use Case - Report alignment statistics; ANI
+     2. Use Case - Report alignment statistics; ANI
          * Command line syntax: dnadiff  [options]  <reference>  <query> or dnadiff  [options]  -d <delta file>
    
 ## MLST Approach
