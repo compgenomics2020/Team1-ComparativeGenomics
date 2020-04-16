@@ -3,7 +3,18 @@ import argparse
 import subprocess
 
 def MUMmer:
+    '''Requires a reference sequence (ref.seq) in FASTA format and a query sequences in FastA format (qry.seq) 
+   
+    <reference>  specifies the multi-FastA sequence file that contains
+                 the reference sequences, to be aligned with the queries.
+    <query>      specifies the multi-FastA sequence file that contains
+                 the query sequences, to be aligned with the references.
 
+    OUTPUT:
+    <prefix>.delta    the delta encoded alignments between the reference and
+                      query sequences.  
+     '''   
+    nucmer -p <prefix> <reference> <query>
     return None
 
 def chewBBACA(input_genomes,output_dir, cpu, prodigal = "prodigal_training_files/Escherichia_coli.trn"):
