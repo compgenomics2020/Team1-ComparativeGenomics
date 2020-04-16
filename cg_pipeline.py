@@ -77,6 +77,7 @@ def main():
     parser.add_argument("-i", "--input", help="directory for input genomes", required = True)
     parser.add_argument("-o", "--output", help="name of output directory", required = True)
     parser.add_argument("-c", "--cpu", help="Number of cpus to use", default = 6)
+    parser.add_argument("-t", "--tool", help="Tool of choice: MUMmer (m), chewBBACA (c), kSNP (k), or all (a)", choices = ['m', 'c', 'k', 'a']
     args = parser.parse_args()
 
     output = args.output
@@ -90,7 +91,8 @@ def main():
         MUMmer(args.prefix, args.reference_file, args.query_file))
 
     #call chewBBACA
-    chewBBACA(args.input,output, args.cpu)
+    if args.tool == 'c' or args.tool == 'a':
+        chewBBACA(args.input, output, args.cpu)
 
     #call kSNP
 

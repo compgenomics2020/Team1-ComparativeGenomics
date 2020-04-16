@@ -4,7 +4,7 @@
 
 # Comparative Genomics Pipeline
 
-This pipeline performs various comparative genomics techniques on the 50 E.coli isolates using ANI, MLST and SNP-based approaches to determine the outbreak cluster. 
+This pipeline performs various comparative genomics techniques on E.coli isolates using ANI, MLST and SNP-based approaches to determine the outbreak cluster. 
 
 ## Tools Used:
 
@@ -35,11 +35,11 @@ phylogenetic trees based upon those SNPs.
 
 ## Usage:
 ```
-./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -p <file_path> [-h]
+./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -t <m|c|k|a> [-h]
     -i,--input     path to directory containing assembled genomes
     -o,--output    path to output directory
     -c,--cpu       number of cpus
-    -p,--ptf       path of prodigal training prodigal training file for genome species
+    -t,--tool      tool of choice: MUMmer (m), chewBBACA (c), kSNP3 (k), all (a)
     -h             print usage information    
 ```
 
