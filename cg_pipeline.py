@@ -6,23 +6,22 @@ def MUMmer:
 
     return None
 
-def chewBBACA(input_genomes,output_dir, cpu, prodigal = "prodigal_training_files/Escherichia_coli.trn"):
-    '''Creates a wgMLST and cgMLST schema as well as a Newcik tree of the cgMLST
+def chewBBACA(input_genomes,output_dir, cpu):
+    '''Creates a wgMLST and cgMLST schema as well as a Newick tree of the cgMLST
        Input: 
             input_genomes = directory where complete or draft genomes are located
             output_dir = directory for output
             cpu = Number of cpus
-            prodigal = prodigal training file for genome species
     '''
     # wgMLST Schema Creation
-    subprocess.run("chewBBACA.py CreateSchema -i " + input_genomest + " --cpu" + cpu + " -o "+output_dir+"Schema --ptf " + prodigal, shell = True)
+    subprocess.run("chewBBACA.py CreateSchema -i " + input_genomes + " --cpu" + cpu + " -o "+ output_dir +"Schema --ptf prodigal_training_files/Escherichia_coli.trn", shell = True)
     # Allele Calling
-    subprocess.run("chewBBACA.py AlleleCall -i " + input_genomest + " -g schema/ -o "+output_dir+"results_allele --cpu "+cpu+" --ptf "+ prodigal, shell = True)
+    subprocess.run("chewBBACA.py AlleleCall -i " + input_genomes + " -g schema/ -o "+ output_dir +"results_allele --cpu "+cpu+" --ptf prodigal_training_files/Escherichia_coli.trn", shell = True)
     # Define cgMLST schema
     date = subprocess.run("ls -t results_allele/ | head -n1", shell = True)
-    subprocess.run("chewBBACA.py ExtractCgMLST -i results_allele/"+date+"/results_alleles.tsv -o "+output_dir+"cgMLST/ -r "+outputdir+"results_allele/"+date+"/RepeatedLoci.txt -p 0.95", shell = True)
+    subprocess.run("chewBBACA.py ExtractCgMLST -i results_allele/"+ date +"/results_alleles.tsv -o " + output_dir +"cgMLST/ -r " + outputdir + "results_allele/" + date + "/RepeatedLoci.txt -p 0.95", shell = True)
     # Create Newick Tree
-    subprocess.run("grapetree "+output_dir+"cgMLST/cgMLST.tsv > cgMLST.tree", shell = True)
+    subprocess.run("grapetree " + output_dir + "cgMLST/cgMLST.tsv > cgMLST.tree", shell = True)
     return None
 
 def kSNP:
@@ -60,7 +59,6 @@ def main():
     parser.add_argument("-i", "--input", help="directory for input genomes", required = True)
     parser.add_argument("-o", "--output", help="name of output directory", required = True)
     parser.add_argument("-c", "--cpu", help="Number of cpus to use", default = 6)
-    parser.add_argument("-p", "--ptf", help = "Prodigal training file for chewBBACA; has extension *.ptf")
     args = parser.parse_args()
 
     output = args.output
@@ -70,10 +68,7 @@ def main():
      #call MUMmer
 
     #call chewBBACA
-    if args.ptf:
-        chewBBACA(args.input,output, args.cpu, args.ptf)
-    else:
-        chewBBACA(args.input,output, args.cpu))
+    chewBBACA(args.input,output, args.cpu)
 
     #call kSNP
 
