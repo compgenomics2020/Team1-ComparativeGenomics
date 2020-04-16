@@ -15,6 +15,9 @@ def MUMmer:
                       query sequences.  
      '''   
     nucmer -p <prefix> <reference> <query>
+    
+    dnaff -p -d <delta file>
+    
     return None
 
 def chewBBACA(input_genomes,output_dir, cpu, prodigal = "prodigal_training_files/Escherichia_coli.trn"):
