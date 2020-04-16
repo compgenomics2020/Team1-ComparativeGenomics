@@ -2,9 +2,27 @@
 import argparse
 import subprocess
 
-def MUMmer:
+def MUMmer(prefix, reference_file, query_file, delta_file):
+    '''Requires a reference sequence (ref.seq) in FASTA format and a query sequences in FastA format (qry.seq) 
+   
+    <reference>  specifies the multi-FastA sequence file that contains
+                 the reference sequences, to be aligned with the queries.
+    <query>      specifies the multi-FastA sequence file that contains
+                 the query sequences, to be aligned with the references.
+    OUTPUT:
+    <prefix>.delta    the delta encoded alignments between the reference and
+                      query sequences.  
+     '''   
+	 
+	nucmer_command = ["nucmer", "-p", "prefix", reference_file, query_file, delta_file]
+	dnaff_command = ["dnaff", "-p", "-d", delta_file]
+	
+	subprocess.call(nucmer_command)
+	
+	subprocess.call(dnaff_command
 
-    return None
+    
+    return(None)
 
 def chewBBACA(input_genomes,output_dir, cpu):
     '''Creates a wgMLST and cgMLST schema as well as a Newick tree of the cgMLST
@@ -66,6 +84,10 @@ def main():
         output += "/"
    
      #call MUMmer
+    if args.delta:
+        MUMmer(args.prefix, args.reference_file, args.query_file, args.delta_file)
+    else:
+        MUMmer(args.prefix, args.reference_file, args.query_file))
 
     #call chewBBACA
     chewBBACA(args.input,output, args.cpu)
