@@ -24,11 +24,11 @@ This pipeline performs various comparative genomics techniques on E.coli isolate
 
 #### ChewBBACA:	
    * chewBBACA is a comprehensive pipeline including a set of functions for the creation and validation of whole genome and core genome MultiLocus Sequence Typing (wg/cgMLST) schemas, providing an allele calling algorithm based on Blast Score Ratio that can be run in multiprocessor settings.
-   * Input: directory with assembled genomes
-   * Output: wgMLST and cgMLST schemas
+     * Input: directory with assembled genomes
+     * Output: wgMLST and cgMLST schemas
    * Grapetree is used to create a Newick tree for later visualization and must be installed prior to running the pipeline (see [Requirements](#Requirements)).
-   * Input: cgMLST schema
-   * Output: Newick tree file (cgMLST.tree)	
+     * Input: cgMLST schema
+     * Output: Newick tree file (cgMLST.tree)	
    
 ## SNP Approach
 
