@@ -5,7 +5,7 @@ import os
 
 def chewBBACA(input_genomes,output_dir, cpu):
     '''Creates a wgMLST and cgMLST schema as well as a Newick tree of the cgMLST
-       Input: 
+       Input:
             input_genomes = directory where complete or draft genomes are located
             output_dir = directory for output
             cpu = Number of cpus
@@ -53,37 +53,93 @@ def collect_assembled_genomes():
 
 def MUMmer(prefix, reference_file, query_file):
     nucmer_command = ["nucmer", "-p", "prefix", reference_file, query_file]
-    delta_file = prefix+".delta"	
+    delta_file = prefix+".delta"
     dnaff_command = ["dnaff", "-p", "-d", delta_file]
     subprocess.call(nucmer_command)
-    subprocess.call(dnaff_command)	
+    subprocess.call(dnaff_command)
     return(delta_file)
 
-def kSNP():
+def kSNP(pathToInputDirectory,outDir,k,tree_type):
 
-    ### kSNP should be on your path
-    ### Input: assembled Reads
+    '''
+        - pathToInputDirectory: contains the path to the input directory where the fasta files are present
+        - outDir: contains the path to where the output files are to be stored
+        - k: User can select the k-mer size; when the k-mer size is not specified, the function calculates the k-mer size.
+        - tree_type: should contain P, ML or NJ (only one). P for Parsimony Trees, ML for Maximum Likelihood Trees, and NJ for Neighbor-Joining Trees
+    '''
 
-    ### options
+    #creating a temp directory
+    make = "mkdir snp_temp"
+    snp_temp_path = os.path.abspath('snp_temp')
+    subprocess.call(make.split())
 
-    ## if parsimony
+    #getting the input directory name without its absolute path
+    input_Directory = pathToInputDirectory.split("/")[-1]
+    dir_path = pathToInputDirectory.strip(input_Directory)
 
-    ## if maximum likelihood
+    #storing the current working directory
+    cwd = os.getcwd()
 
-    ## if neighbour-joining
+    #changing to the input directory to run MakeKSNP3infile
+    os.chdir(dir_path)
 
-    ## getting the required input files
+    ################ creating an input list of fasta files with the respective genome ids ################
+    input_list = "MakeKSNP3infile "+input_Directory+" "+snp_temp_path+"/kSNP_input.txt A"
+    subprocess.call(input_list.split())
 
-    pathToInputFiles = "/home/projects/group-a/Team1-GenomeAssembly/assembled_output/"
-    input_files_command = 'ls '+ path_to_gpresults + '*.fasta'
-    input_files = subprocess.check_output(input_files_command,shell=True)
-    input_files = input_files.split('\n')
+    #changing to the current working directory
+    os.chdir(cwd)
 
-    #### creating an input fasta file for kSNP:
+    if k == 1: #default value, k-mer size for the dataset will be determined
+        ############# running Kchooser to determine the k-mer size if not specified #########
 
-    ## running Kchooser
+        ######### creating a single multi-fasta file from the input files for kChooser #########
+        makeFasta_command = "MakeFasta "+snp_temp_path+"/kSNP_input.txt "+snp_temp_path+"/kchooser_input.fasta"
+        subprocess.call(makeFasta_command.split())
 
-    #### running kSNP
+        ''' Note: The Kchooser program that comes along with the kSNP tool sometimes throws errors on certain systems.
+        If the error is similar to: "system jellyfish dump output_0 -c > jellyout.txt failed: Inappropriate ioctl for device at Kchooser.pl line 242."
+        Please download the corrected Kchooser script from: https://sourceforge.net/p/ksnp/discussion/general/thread/8f02db67/f844'''
+
+        kchooser_command = "Kchooser "+snp_temp_path+"/kchooser_input.fasta"
+        subprocess.call(kchooser_command.split())
+
+        fhand = open('Kchooser.report','r')
+
+        for line in fhand:
+            line.rstrip()
+            if line.startswith('The optimum value of K is'):
+                line = line.split()
+                k = line[6].strip(".")
+
+        fhand.close()
+
+        ########## running kSNP and visualizing the phylogenetic tree ################
+
+    if tree_type == 'P':
+
+        kSNP_command = "kSNP3 -in "+snp_temp_path+"/kSNP_input.txt -outdir "+outDir+" -k "+str(k)
+
+        figtree_command = "figtree -graphic PDF "+outDir+"/tree.parsimony.tre "+outDir+"/kSNP_run_parsimony.pdf"
+
+    if tree_type == 'ML':
+
+        kSNP_command = "kSNP3 -in "+snp_temp_path+"/kSNP_input.txt -outdir "+outDir+" -k "+str(k)+" -ML"
+
+        figtree_command = "figtree -graphic PDF "+outDir+"/tree.ML.tre "+outDir+"/kSNP_run_ML.pdf"
+
+    if tree_type == 'NJ':
+
+        kSNP_command = "kSNP3 -in "+snp_temp_path+"/kSNP_input.txt -outdir "+outDir+" -k "+str(k)+" -NJ"
+
+        figtree_command = "figtree -graphic PDF "+outDir+"/tree.NJ.tre "+outDir+"/kSNP_run_NJ.pdf"
+
+    subprocess.call(kSNP_command.split())
+    subprocess.call(figtree_command.split())
+
+    #deleting the temporary directory
+    delete = "rm -r snp_temp"
+    subprocess.call(delete.split())
 
     return None
 
@@ -95,16 +151,18 @@ def main():
     parser.add_argument("-o", "--output", help="name of output directory", required = True)
     parser.add_argument("-c", "--cpu", help="Number of cpus to use", default = 6)
     parser.add_argument("-t", "--tool", help="Tool of choice: MUMmer (m), chewBBACA (c), kSNP (k), or all (a)", choices = ['m', 'c', 'k', 'a'], required = True)
+    parser.add_argument("-k","--kmersize",help="Specify K-mer Size for kSNP",default=1)
+    parser.add_argument("-tr","--treetype",help="Phylogenetic Tree of Choice for kSNP output", choices = ['P','ML','NJ'], default='P')
     args = parser.parse_args()
 
     output = args.output
     if output[-1] != "/":
         output += "/"
-   
+
     #call MUMmer
     names, mummer_inputs = collect_assembled_genomes()
     reference = mummer_inputs[1]
-	
+
     for i in range(0, len(mummer_inputs)):
         prefix = names[i][0:7]
         MUMmer(prefix, reference, mummer_inputs[i])
@@ -114,6 +172,11 @@ def main():
         chewBBACA(args.input, output, args.cpu)
 
     #call kSNP
+
+    k = args.kmersize
+    tr = args.treetype
+
+    kSNP(args.input,args.output,k,tr)
 
     #analysis or visualization -- if we're including it here
 
