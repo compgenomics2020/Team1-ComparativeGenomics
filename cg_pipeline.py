@@ -3,23 +3,6 @@ import argparse
 import subprocess
 import os
 
-#def MUMmer(prefix, reference_file, query_file, delta_file):
-#    '''Requires a reference sequence (ref.seq) in FASTA format and a query sequences in FastA format (qry.seq) 
-#   
-#    <reference>  specifies the multi-FastA sequence file that contains
-#                 the reference sequences, to be aligned with the queries.
-#    <query>      specifies the multi-FastA sequence file that contains
-#                 the query sequences, to be aligned with the references.
-#    OUTPUT:
-#    <prefix>.delta    the delta encoded alignments between the reference and
-#                      query sequences.  
-#     '''   
-	 
-   # nucmer_command = ["nucmer", "-p", "prefix", reference_file, query_file, delta_file]
-   # dnaff_command = ["dnaff", "-p", "-d", delta_file]
-   # subprocess.call(nucmer_command)
-   # subprocess.call(dnaff_command   
-
 def chewBBACA(input_genomes,output_dir, cpu):
     '''Creates a wgMLST and cgMLST schema as well as a Newick tree of the cgMLST
        Input: 
@@ -56,6 +39,25 @@ def chewBBACA(input_genomes,output_dir, cpu):
     subprocess.run(grapetree, shell = True)
 
     return None
+
+def collect_assembled_genomes():
+    pathToInputFiles = "/home/projects/group-a/Team1-GenomeAssembly/assembled_output/"
+    input_files = os.listdir(pathToInputFiles)
+    base_names = []
+    cleaned_files = []
+    for file in input_files:
+        if file.endswith(".fasta"):
+            base_names.append(file)
+            cleaned_files.append(pathToInputFiles+file)
+    return(base_names, cleaned_files)
+
+def MUMmer(prefix, reference_file, query_file):
+    nucmer_command = ["nucmer", "-p", "prefix", reference_file, query_file]
+    delta_file = prefix+".delta"	
+    dnaff_command = ["dnaff", "-p", "-d", delta_file]
+    subprocess.call(nucmer_command)
+    subprocess.call(dnaff_command)	
+    return(delta_file)
 
 def kSNP():
 
@@ -99,11 +101,13 @@ def main():
     if output[-1] != "/":
         output += "/"
    
-     #call MUMmer
-    #if args.delta:
-     #   MUMmer(args.prefix, args.reference_file, args.query_file, args.delta_file)
-    #else:
-    #    MUMmer(args.prefix, args.reference_file, args.query_file))
+    #call MUMmer
+    names, mummer_inputs = collect_assembled_genomes()
+    reference = mummer_inputs[1]
+	
+    for i in range(0, len(mummer_inputs)):
+        prefix = names[i][0:7]
+        MUMmer(prefix, reference, mummer_inputs[i])
 
     #call chewBBACA
     if args.tool == 'c' or args.tool == 'a':
