@@ -70,10 +70,11 @@ def kSNP(pathToInputDirectory,outDir,k,tree_type):
 
     #creating a temp directory
     make = "mkdir snp_temp"
-    snp_temp_path = os.path.abspath('snp_temp')
     subprocess.call(make.split())
+    snp_temp_path = os.path.abspath('snp_temp')
 
     #getting the input directory name without its absolute path
+    pathToInputDirectory = pathToInputDirectory.rstrip('/')
     input_Directory = pathToInputDirectory.split("/")[-1]
     dir_path = pathToInputDirectory.strip(input_Directory)
 
