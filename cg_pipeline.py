@@ -151,7 +151,7 @@ def main():
     parser.add_argument("-i", "--input", help="directory for input genomes", required = True)
     parser.add_argument("-o", "--output", help="name of output directory", required = True)
     parser.add_argument("-c", "--cpu", help="Number of cpus to use", default = 6)
-    parser.add_argument("-t", "--tool", help="Tool of choice: MUMmer (m), chewBBACA (c), kSNP (k), or all (a)", choices = ['m', 'c', 'k', 'a'], required = True)
+    parser.add_argument("-t", "--tool", help="Tool of choice: MUMmer (m), chewBBACA (c), kSNP (k), or all (a)", choices = ['m', 'c', 'k', 'a'], default = 'a')
     parser.add_argument("-k","--kmersize",help="Specify K-mer Size for kSNP",default=1)
     parser.add_argument("-tr","--treetype",help="Phylogenetic Tree of Choice for kSNP output", choices = ['P','ML','NJ'], default='P')
     args = parser.parse_args()
