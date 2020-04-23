@@ -52,7 +52,7 @@ phylogenetic trees based upon those SNPs.
 ## Usage:
 ```
 ./cg_pipeline.py -i <dir_path> -o <dir_name> [-c <int>] -t <m|c|k|a> [-h]
-    -i,--input     path to directory containing assembled genomes
+    -i,--input     full path to directory containing assembled genomes
     -o,--output    path to output directory
     -c,--cpu       number of cpus
     -t,--tool      tool of choice: MUMmer (m), chewBBACA (c), kSNP3 (k), all (a)
